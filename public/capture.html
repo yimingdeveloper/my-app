@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+    <title>Capture</title>
+  </head>
+  <body>
+    <!-- Video Feed -->
+    <div class="display-cover">
+      <video autoplay></video>
+      <!-- Video Options -->
+      <div class="video-options">
+        <select name="" id="" class="custom-select">
+          <option value="">Select camera</option>
+        </select>
+      </div>
+      <!-- Outline -->
+      <img class="outline-image d-none" src="images/outline.png" alt="" />
+      <!-- Control Buttons -->
+      <div class="controls">
+        <button type="button" class="btn btn-primary play" title="Play">
+          PLAY
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary pause d-none"
+          title="Pause"
+        >
+          PAUSE
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary screenshot d-none"
+          title="ScreenShot"
+        >
+          CAPTURE
+        </button>
+      </div>
+    </div>
+    <!-- Screenshot -->
+    <div class="container">
+      <canvas class="d-none"></canvas>
+      <img class="screenshot-image d-none" alt="" />
+    </div>
+    <!-- JavaScript -->
+    <script src="./javascripts/capture.js"></script>
+  </body>
+</html>
