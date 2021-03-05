@@ -4,7 +4,6 @@
   "description": "This is my first web app",
   "private": true,
   "scripts": {
-    "main": "app.js",
     "start": "node app.js"
   },
   "author": "Hasti Gheibi Dehnashi",
