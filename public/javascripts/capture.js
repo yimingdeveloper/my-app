@@ -4,10 +4,11 @@ const video = document.querySelector("video");
 const canvas = document.querySelector("canvas");
 const screenshotImage = document.querySelector(".screenshot-image");
 const outlineImage = document.querySelector(".outline-image");
-const buttons = [...controls.querySelectorAll("button")];
+const controlButtons = [...controls.querySelectorAll("button")];
+const analyze = document.querySelector(".analyze");
 let streamStarted = false;
 
-const [play, pause, screenshot] = buttons;
+const [play, pause, screenshot] = controlButtons;
 
 const constraints = {
   video: {
@@ -27,6 +28,7 @@ cameraOptions.onchange = () => {
   startStream(updatedConstraints);
 };
 
+// starts video stream
 play.onclick = () => {
   if (streamStarted) {
     video.play();
@@ -46,6 +48,7 @@ play.onclick = () => {
   }
 };
 
+// pauses video stream
 const pauseStream = () => {
   video.pause();
   play.classList.remove("d-none");
@@ -53,22 +56,33 @@ const pauseStream = () => {
   outlineImage.classList.add("d-none");
 };
 
+// takes screenshot from video stream
 const doScreenshot = () => {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   canvas.getContext("2d").drawImage(video, 0, 0);
   screenshotImage.src = canvas.toDataURL("image/webp");
   screenshotImage.classList.remove("d-none");
+  analyze.classList.remove("d-none");
+};
+
+// analyzes screen shot
+const analyzeScreenShot = () => {
+  // do stuff
+  console.log("in analyze");
 };
 
 pause.onclick = pauseStream;
 screenshot.onclick = doScreenshot;
+analyze.onclick = analyzeScreenShot;
 
+// asks for permission to get camera access
 const startStream = async (constraints) => {
   const stream = await navigator.mediaDevices.getUserMedia(constraints);
   handleStream(stream);
 };
 
+// displays video stream and controls
 const handleStream = (stream) => {
   video.srcObject = stream;
   play.classList.add("d-none");
@@ -77,6 +91,7 @@ const handleStream = (stream) => {
   outlineImage.classList.remove("d-none");
 };
 
+// gets camera options
 const getCameraSelection = async () => {
   const devices = await navigator.mediaDevices.enumerateDevices();
   const videoDevices = devices.filter((device) => device.kind === "videoinput");
