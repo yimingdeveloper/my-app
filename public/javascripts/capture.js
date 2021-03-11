@@ -6,6 +6,8 @@ const screenshotImage = document.querySelector(".screenshot-image");
 const outlineImage = document.querySelector(".outline-image");
 const controlButtons = [...controls.querySelectorAll("button")];
 const analyze = document.querySelector(".analyze");
+const screenshotOutput = document.querySelector(".screenshot-output");
+
 let streamStarted = false;
 
 const [play, pause, screenshot] = controlButtons;
@@ -66,15 +68,15 @@ const doScreenshot = () => {
   analyze.classList.remove("d-none");
 };
 
-// analyzes screen shot
-const analyzeScreenShot = () => {
-  // do stuff
-  console.log("in analyze");
-};
-
 pause.onclick = pauseStream;
 screenshot.onclick = doScreenshot;
-analyze.onclick = analyzeScreenShot;
+
+analyze.onclick = () => {
+  console.log(canvas, screenshotImage);
+
+  screenshotOutput.src = canvas.toDataURL("image/webp");
+  screenshotOutput.classList.remove("d-none");
+};
 
 // asks for permission to get camera access
 const startStream = async (constraints) => {

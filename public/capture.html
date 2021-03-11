@@ -51,15 +51,22 @@
     </div>
     <!-- Screenshot -->
     <div class="container">
-      <canvas class="d-none"></canvas>
-      <img class="screenshot-image d-none" alt="" />
-      <button
-        type="button"
-        class="btn btn-primary analyze d-none"
-        title="Analyze"
-      >
-        CALCULATE
-      </button>
+      <div class="row">
+        <div class="col-lg-6">
+          <canvas class="d-none"></canvas>
+          <img class="screenshot-image d-none" alt="" />
+          <button
+            type="button"
+            class="btn btn-primary analyze d-none"
+            title="Analyze"
+          >
+            ANALYZE
+          </button>
+        </div>
+        <div class="col-lg-6">
+          <img class="screenshot-output d-none" alt="" />
+        </div>
+      </div>
     </div>
     <!-- JavaScript -->
     <script src="./javascripts/capture.js"></script>
