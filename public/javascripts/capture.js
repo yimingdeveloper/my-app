@@ -72,10 +72,35 @@ pause.onclick = pauseStream;
 screenshot.onclick = doScreenshot;
 
 analyze.onclick = () => {
-  console.log(canvas, screenshotImage);
-
+  //console.log(canvas, screenshotImage);
+  console.log(
+    "video width: ",
+    video.videoWidth,
+    "video height: ",
+    video.videoHeight
+  );
+  console.log(
+    "original canvas width: ",
+    canvas.width,
+    "original canvas height: ",
+    canvas.height
+  );
   screenshotOutput.src = canvas.toDataURL("image/webp");
   screenshotOutput.classList.remove("d-none");
+  const canvasOutput = document.createElement("canvas");
+  const context = canvasOutput.getContext("2d");
+  const width = screenshotOutput.width;
+  const height = screenshotOutput.height;
+  canvasOutput.width = width;
+  canvasOutput.height = height;
+  console.log(
+    "new screenshot width: ",
+    canvasOutput.width,
+    "new screenshot height: ",
+    canvasOutput.height
+  );
+
+  context.drawImage(screenshotImage, 0, 0, width, height);
 };
 
 // asks for permission to get camera access
