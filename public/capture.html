@@ -36,17 +36,20 @@
         </button>
         <button
           type="button"
-          class="btn btn-primary screenshot d-none"
-          title="ScreenShot"
+          class="btn btn-primary capture d-none"
+          title="Capture"
         >
           CAPTURE
         </button>
       </div>
     </div>
-    <!-- Screenshot -->
-    <div class="container">
+    <!-- Outputs -->
+    <div class="outputs container">
       <canvas class="d-none"></canvas>
-      <img class="screenshot-image d-none" alt="" />
+      <div>
+        <img class="screenshot-image d-none" />
+        <img class="display-image d-none" />
+      </div>
       <button
         type="button"
         class="btn btn-primary analyze d-none"
@@ -55,7 +58,7 @@
         ANALYZE
       </button>
       <p></p>
-      <div class="output"></div>
+      <div class="result"></div>
       <br />
       <br />
     </div>

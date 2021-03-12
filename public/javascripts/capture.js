@@ -2,12 +2,14 @@
 const video = document.querySelector("video");
 const controls = document.querySelector(".controls");
 const controlButtons = [...controls.querySelectorAll("button")];
-const [play, pause, screenshot] = controlButtons;
+const [play, pause, capture] = controlButtons;
 const outline = document.querySelector(".outline");
-// Screenshot components
+// Outputs
 const canvas = document.querySelector("canvas");
 const screenshotImage = document.querySelector(".screenshot-image");
+const displayImage = document.querySelector(".display-image");
 const analyze = document.querySelector(".analyze");
+const result = document.querySelector(".result");
 
 // Stream switch
 let streamStarted = false;
@@ -43,12 +45,14 @@ pause.onclick = () => {
 };
 
 // Takes screenshot from video stream
-screenshot.onclick = () => {
+capture.onclick = () => {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   canvas.getContext("2d").drawImage(video, 0, 0);
-  screenshotImage.src = canvas.toDataURL("image/png");
-  screenshotImage.classList.remove("d-none");
+  screenshotImage.src = canvas.toDataURL("image/webp");
+  displayImage.src = canvas.toDataURL("image/webp");
+  //screenshotImage.classList.remove("d-none");
+  displayImage.classList.remove("d-none");
   analyze.classList.remove("d-none");
 };
 
@@ -82,17 +86,16 @@ analyze.onclick = () => {
   }
 
   // Get average R, G, B, A values
-  let avgR = Math.round(R / pixelsPerChannel);
-  let avgG = Math.round(G / pixelsPerChannel);
-  let avgB = Math.round(B / pixelsPerChannel);
+  R = Math.round(R / pixelsPerChannel);
+  G = Math.round(G / pixelsPerChannel);
+  B = Math.round(B / pixelsPerChannel);
 
   // Write average RGB values in doc
-  let color = `rgb(${avgR} ${avgG} ${avgB})`;
+  let color = `rgb(${R} ${G} ${B})`;
   document.querySelector("p").innerHTML = color;
 
   // Display average color in doc
-  const div = document.querySelector(".output");
-  div.style.backgroundColor = color;
+  result.style.backgroundColor = color;
 };
 
 // Establishes a video stream
@@ -112,6 +115,6 @@ const handleStream = (stream) => {
   streamStarted = true;
   play.classList.add("d-none");
   pause.classList.remove("d-none");
-  screenshot.classList.remove("d-none");
+  capture.classList.remove("d-none");
   outline.classList.remove("d-none");
 };
