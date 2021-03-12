@@ -1,15 +1,16 @@
-const controls = document.querySelector(".controls");
-const cameraOptions = document.querySelector(".video-options>select");
+// Video cover components
 const video = document.querySelector("video");
+const controls = document.querySelector(".controls");
+const controlButtons = [...controls.querySelectorAll("button")];
+const [play, pause, screenshot] = controlButtons;
+const outline = document.querySelector(".outline");
+// Screenshot components
 const canvas = document.querySelector("canvas");
 const screenshotImage = document.querySelector(".screenshot-image");
-const outlineImage = document.querySelector(".outline-image");
-const controlButtons = [...controls.querySelectorAll("button")];
 const analyze = document.querySelector(".analyze");
 
+// Stream switch
 let streamStarted = false;
-
-const [play, pause, screenshot] = controlButtons;
 
 // Set video dimensions
 const constraints = {
@@ -19,34 +20,17 @@ const constraints = {
   },
 };
 
-cameraOptions.onchange = () => {
-  const updatedConstraints = {
-    ...constraints,
-    deviceId: {
-      exact: cameraOptions.value,
-    },
-  };
-
-  startStream(updatedConstraints);
-};
-
-// Starts video stream
+// Plays video stream and displays controls
 play.onclick = () => {
   if (streamStarted) {
     video.play();
     play.classList.add("d-none");
     pause.classList.remove("d-none");
-    outlineImage.classList.remove("d-none");
+    outline.classList.remove("d-none");
     return;
-  }
-  if ("mediaDevices" in navigator && navigator.mediaDevices.getUserMedia) {
-    const updatedConstraints = {
-      ...constraints,
-      deviceId: {
-        exact: cameraOptions.value,
-      },
-    };
-    startStream(updatedConstraints);
+    // Starts new stream if first time
+  } else if ("mediaDevices" in navigator) {
+    startStream(constraints);
   }
 };
 
@@ -55,7 +39,7 @@ pause.onclick = () => {
   video.pause();
   play.classList.remove("d-none");
   pause.classList.add("d-none");
-  outlineImage.classList.add("d-none");
+  outline.classList.add("d-none");
 };
 
 // Takes screenshot from video stream
@@ -111,32 +95,23 @@ analyze.onclick = () => {
   div.style.backgroundColor = color;
 };
 
-//pause.onclick = pauseStream;
-//screenshot.onclick = doScreenshot;
-
-// asks for permission to get camera access
+// Establishes a video stream
 const startStream = async (constraints) => {
-  const stream = await navigator.mediaDevices.getUserMedia(constraints);
-  handleStream(stream);
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    handleStream(stream);
+  } catch (e) {
+    console.log(e);
+    console.log("please give permissions");
+  }
 };
 
-// displays video stream and controls
+// Displays video stream and activates controls
 const handleStream = (stream) => {
   video.srcObject = stream;
+  streamStarted = true;
   play.classList.add("d-none");
   pause.classList.remove("d-none");
   screenshot.classList.remove("d-none");
-  outlineImage.classList.remove("d-none");
+  outline.classList.remove("d-none");
 };
-
-// gets camera options
-const getCameraSelection = async () => {
-  const devices = await navigator.mediaDevices.enumerateDevices();
-  const videoDevices = devices.filter((device) => device.kind === "videoinput");
-  const options = videoDevices.map((videoDevice) => {
-    return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
-  });
-  cameraOptions.innerHTML = options.join("");
-};
-
-getCameraSelection();
