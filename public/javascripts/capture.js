@@ -51,7 +51,7 @@ play.onclick = () => {
 };
 
 // Pauses video stream
-const pauseStream = () => {
+pause.onclick = () => {
   video.pause();
   play.classList.remove("d-none");
   pause.classList.add("d-none");
@@ -59,12 +59,11 @@ const pauseStream = () => {
 };
 
 // Takes screenshot from video stream
-const doScreenshot = () => {
-  console.log("in doScreenshot");
+screenshot.onclick = () => {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   canvas.getContext("2d").drawImage(video, 0, 0);
-  screenshotImage.src = canvas.toDataURL("image/webp");
+  screenshotImage.src = canvas.toDataURL("image/png");
   screenshotImage.classList.remove("d-none");
   analyze.classList.remove("d-none");
 };
@@ -84,10 +83,9 @@ analyze.onclick = () => {
   let R = 0;
   let G = 0;
   let B = 0;
-  let A = 0;
 
   // All the pixel's components have been flattened into 1-D array
-  const data = context.getImageData(580, 340, 40, 20).data;
+  const data = context.getImageData(590, 130, 95, 55).data;
   const components = data.length;
   const pixelsPerChannel = components / 4;
 
@@ -97,23 +95,24 @@ analyze.onclick = () => {
     R += data[i];
     G += data[i + 1];
     B += data[i + 2];
-    A += data[i + 3];
   }
 
   // Get average R, G, B, A values
   let avgR = Math.round(R / pixelsPerChannel);
   let avgG = Math.round(G / pixelsPerChannel);
   let avgB = Math.round(B / pixelsPerChannel);
-  let avgA = A / pixelsPerChannel / 255;
+
+  // Write average RGB values in doc
+  let color = `rgb(${avgR} ${avgG} ${avgB})`;
+  document.querySelector("p").innerHTML = color;
 
   // Display average color in doc
-  document.querySelector(
-    "p"
-  ).innerHTML = `R G B A => ${avgR} ${avgG} ${avgB} ${avgA}`;
+  const div = document.querySelector(".output");
+  div.style.backgroundColor = color;
 };
 
-pause.onclick = pauseStream;
-screenshot.onclick = doScreenshot;
+//pause.onclick = pauseStream;
+//screenshot.onclick = doScreenshot;
 
 // asks for permission to get camera access
 const startStream = async (constraints) => {
