@@ -6,12 +6,12 @@ const screenshotImage = document.querySelector(".screenshot-image");
 const outlineImage = document.querySelector(".outline-image");
 const controlButtons = [...controls.querySelectorAll("button")];
 const analyze = document.querySelector(".analyze");
-const screenshotOutput = document.querySelector(".screenshot-output");
 
 let streamStarted = false;
 
 const [play, pause, screenshot] = controlButtons;
 
+// Set video dimensions
 const constraints = {
   video: {
     width: 1280,
@@ -30,7 +30,7 @@ cameraOptions.onchange = () => {
   startStream(updatedConstraints);
 };
 
-// starts video stream
+// Starts video stream
 play.onclick = () => {
   if (streamStarted) {
     video.play();
@@ -50,7 +50,7 @@ play.onclick = () => {
   }
 };
 
-// pauses video stream
+// Pauses video stream
 const pauseStream = () => {
   video.pause();
   play.classList.remove("d-none");
@@ -58,8 +58,9 @@ const pauseStream = () => {
   outlineImage.classList.add("d-none");
 };
 
-// takes screenshot from video stream
+// Takes screenshot from video stream
 const doScreenshot = () => {
+  console.log("in doScreenshot");
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   canvas.getContext("2d").drawImage(video, 0, 0);
@@ -68,40 +69,51 @@ const doScreenshot = () => {
   analyze.classList.remove("d-none");
 };
 
-pause.onclick = pauseStream;
-screenshot.onclick = doScreenshot;
-
+// Samples color of a region inside screenshot
 analyze.onclick = () => {
-  //console.log(canvas, screenshotImage);
-  console.log(
-    "video width: ",
-    video.videoWidth,
-    "video height: ",
-    video.videoHeight
-  );
-  console.log(
-    "original canvas width: ",
-    canvas.width,
-    "original canvas height: ",
-    canvas.height
-  );
-  screenshotOutput.src = canvas.toDataURL("image/webp");
-  screenshotOutput.classList.remove("d-none");
+  console.log("in sampleColor");
   const canvasOutput = document.createElement("canvas");
   const context = canvasOutput.getContext("2d");
-  const width = screenshotOutput.width;
-  const height = screenshotOutput.height;
+  const width = screenshotImage.width;
+  const height = screenshotImage.height;
   canvasOutput.width = width;
   canvasOutput.height = height;
-  console.log(
-    "new screenshot width: ",
-    canvasOutput.width,
-    "new screenshot height: ",
-    canvasOutput.height
-  );
-
   context.drawImage(screenshotImage, 0, 0, width, height);
+
+  // Each pixel will have 4 components (R, G, B, A)
+  let R = 0;
+  let G = 0;
+  let B = 0;
+  let A = 0;
+
+  // All the pixel's components have been flattened into 1-D array
+  const data = context.getImageData(580, 340, 40, 20).data;
+  const components = data.length;
+  const pixelsPerChannel = components / 4;
+
+  // Loop through all pixels to calculate average color
+  for (let i = 0; i < components; i += 4) {
+    // A single pixel (R, G, B, A) will take 4 positions in the array
+    R += data[i];
+    G += data[i + 1];
+    B += data[i + 2];
+    A += data[i + 3];
+  }
+
+  // Get average R, G, B, A values
+  let avgR = Math.round(R / pixelsPerChannel);
+  let avgG = Math.round(G / pixelsPerChannel);
+  let avgB = Math.round(B / pixelsPerChannel);
+  let avgA = A / pixelsPerChannel / 255;
+
+  // Display average color in doc
+  document.querySelector(
+    "p"
+  ).innerHTML = `R G B A => ${avgR} ${avgG} ${avgB} ${avgA}`;
 };
+
+pause.onclick = pauseStream;
+screenshot.onclick = doScreenshot;
 
 // asks for permission to get camera access
 const startStream = async (constraints) => {
