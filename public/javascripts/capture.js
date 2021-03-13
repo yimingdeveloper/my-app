@@ -56,6 +56,7 @@ capture.onclick = () => {
   analyze.classList.remove("d-none");
 };
 
+// TODO: Turn off camera here
 // Samples color of a region inside screenshot
 analyze.onclick = () => {
   console.log("in sampleColor");
@@ -98,6 +99,8 @@ analyze.onclick = () => {
   result.style.backgroundColor = color;
 };
 
+// ========== MOVE THESE UP IN MASTER ========== //
+
 // Establishes a video stream
 const startStream = async (constraints) => {
   try {
@@ -118,3 +121,42 @@ const handleStream = (stream) => {
   capture.classList.remove("d-none");
   outline.classList.remove("d-none");
 };
+
+// =============================================== //
+
+const match = document.querySelector(".match");
+match.onclick = async () => {
+  let resRaw;
+  let res;
+  resRaw = await fetch("/getShade");
+  res = await resRaw.json();
+
+  // If shade not found create new shade
+  if (res.shade === "SHADE NOT FOUND") {
+    resRaw = await fetch("/createShade", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    //console.log("Hi");
+  }
+  console.log("Got data", res, resRaw);
+};
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//

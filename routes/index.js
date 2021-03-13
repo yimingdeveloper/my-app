@@ -1,15 +1,30 @@
+<<<<<<< HEAD
 var express = require("express");
 var router = express.Router();
+=======
+const express = require("express");
+const router = express.Router();
+>>>>>>> BackEnd
 const myDB = require("../database/db.js");
 
-/* GET home page. */
+// GET home page
 router.get("/", function (req, res) {
   res.render("index");
 });
 
-// router.get("/getFiles", async (req, res) => {
-//   const files = await myDB.getFiles();
-//   res.send({ files: files });
-// });
+// Data endpoint for shades
+router.get("/getShade", async (req, res) => {
+  try {
+    const shade = await myDB.getShade();
+    res.send({ shade: shade });
+  } catch (e) {
+    console.log("Error", e);
+  }
+});
+
+router.post("/createShade", async (req, res) => {
+  const dbRes = await myDB.createShade();
+  res.send({ connected: dbRes });
+});
 
 module.exports = router;
