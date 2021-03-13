@@ -36,6 +36,31 @@ play.onclick = () => {
   }
 };
 
+// ========== MOVE THESE UP IN MASTER ========== //
+
+// Establishes a video stream
+const startStream = async (constraints) => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    handleStream(stream);
+  } catch (e) {
+    console.log(e);
+    console.log("please give permissions");
+  }
+};
+
+// Displays video stream and activates controls
+const handleStream = (stream) => {
+  video.srcObject = stream;
+  streamStarted = true;
+  play.classList.add("d-none");
+  pause.classList.remove("d-none");
+  capture.classList.remove("d-none");
+  outline.classList.remove("d-none");
+};
+
+// =============================================== //
+
 // Pauses video stream
 pause.onclick = () => {
   video.pause();
@@ -80,7 +105,7 @@ analyze.onclick = () => {
 
   // Loop through all pixels to calculate average color
   for (let i = 0; i < components; i += 4) {
-    // A single pixel (R, G, B, A) will take 4 positions in the array
+    // A single pixel occupies 4 positions in array
     R += data[i];
     G += data[i + 1];
     B += data[i + 2];
@@ -99,31 +124,6 @@ analyze.onclick = () => {
   result.style.backgroundColor = color;
 };
 
-// ========== MOVE THESE UP IN MASTER ========== //
-
-// Establishes a video stream
-const startStream = async (constraints) => {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
-    handleStream(stream);
-  } catch (e) {
-    console.log(e);
-    console.log("please give permissions");
-  }
-};
-
-// Displays video stream and activates controls
-const handleStream = (stream) => {
-  video.srcObject = stream;
-  streamStarted = true;
-  play.classList.add("d-none");
-  pause.classList.remove("d-none");
-  capture.classList.remove("d-none");
-  outline.classList.remove("d-none");
-};
-
-// =============================================== //
-
 const match = document.querySelector(".match");
 match.onclick = async () => {
   let resRaw;
@@ -139,9 +139,9 @@ match.onclick = async () => {
         "Content-Type": "application/json",
       },
     });
-    //console.log("Hi");
+    res = await resRaw.json();
   }
-  console.log("Got data", res, resRaw);
+  console.log("Got data", res);
 };
 //
 //

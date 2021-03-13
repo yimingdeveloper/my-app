@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-var express = require("express");
-var router = express.Router();
-=======
 const express = require("express");
 const router = express.Router();
->>>>>>> BackEnd
 const myDB = require("../database/db.js");
 
 // GET home page
