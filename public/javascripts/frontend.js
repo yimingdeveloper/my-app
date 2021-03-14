@@ -36,8 +36,6 @@ play.onclick = () => {
   }
 };
 
-// ========== MOVE THESE UP IN MASTER ========== //
-
 // Establishes a video stream
 const startStream = async (constraints) => {
   try {
@@ -58,8 +56,6 @@ const handleStream = (stream) => {
   capture.classList.remove("d-none");
   outline.classList.remove("d-none");
 };
-
-// =============================================== //
 
 // Pauses video stream
 pause.onclick = () => {
@@ -133,6 +129,7 @@ match.onclick = async () => {
 
   // If shade not found create new shade
   if (res.shade === "SHADE NOT FOUND") {
+    console.log("Data not found, updating database");
     resRaw = await fetch("/createShade", {
       method: "POST",
       headers: {
@@ -140,6 +137,7 @@ match.onclick = async () => {
       },
     });
     res = await resRaw.json();
+  } else {
+    console.log("Got data", res);
   }
-  console.log("Got data", res);
 };
