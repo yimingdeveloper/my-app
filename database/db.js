@@ -1,38 +1,36 @@
-const MongoClient = require("mongodb");
+const { MongoClient } = require("mongodb");
 
 // Implements CRUD routines on database
 function myDB() {
   const mydb = {};
 
-  const url = "mongodb://localhost:27017";
+  const url = process.env.MONGO_URL || "mongodb://localhost:27017";
   const DB_NAME = "mydb";
 
-  mydb.getShade = async () => {
+  mydb.getShade = async (query) => {
     console.log("In mydb.getShade");
     let client;
     let skintone = "This will be a skintone";
     try {
       // Connect to the db
-      client = new MongoClient(url);
+      client = new MongoClient(url, { useUnifiedTopology: true });
       console.log("Connecting to db: ", DB_NAME);
       await client.connect();
-      console.log("Connected");
+      console.log("Connected!");
       // Connect to the collection
       const db = client.db(DB_NAME);
       const skintoneCol = db.collection("skintones");
-      //console.log("Collection ready, querying with ", query);
-      console.log("Connected to collection ", skintoneCol);
+      console.log("Collection ready, querying with ", query);
       // Query the collection
-      //const skintone = await skintoneCol.find(query).toArray();
-      //console.log("Got skintone", skintone);
-      //return skintone;
+      skintone = await skintoneCol.find(query).toArray();
+      console.log("Got skintone", skintone);
+      return skintone;
     } catch (e) {
       console.log(e);
     } finally {
       console.log("closing the connection");
       client.close();
     }
-    return skintone;
   };
 
   mydb.createShade = async () => {

@@ -124,7 +124,7 @@ const match = document.querySelector(".match");
 match.onclick = async () => {
   let resRaw;
   let res;
-  resRaw = await fetch("/getShade");
+  resRaw = await fetch("/getShade/160/124/122");
   res = await resRaw.json();
 
   // If shade not found create new shade
