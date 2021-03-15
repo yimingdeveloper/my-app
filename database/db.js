@@ -10,7 +10,7 @@ function myDB() {
   mydb.getShade = async (query) => {
     console.log("In mydb.getShade");
     let client;
-    let skintone = "This will be a skintone";
+    let skintone = {};
     try {
       // Connect to the db
       client = new MongoClient(url, { useUnifiedTopology: true });
