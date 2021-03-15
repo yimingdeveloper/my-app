@@ -119,12 +119,12 @@ analyze.onclick = () => {
   // Display average color in doc
   result.style.backgroundColor = color;
 };
-
+// TODO get RGB values from div (right now they are hard coded)
 const match = document.querySelector(".match");
 match.onclick = async () => {
   let resRaw;
   let res;
-  resRaw = await fetch("/getShade/160/124/122");
+  resRaw = await fetch("/getShade/173/129/100");
   res = await resRaw.json();
 
   // If shade not found create new shade
@@ -138,6 +138,6 @@ match.onclick = async () => {
     });
     res = await resRaw.json();
   } else {
-    console.log("Got data", res);
+    console.log("Shade", res.shade[0].id);
   }
 };
