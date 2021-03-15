@@ -10,6 +10,10 @@ const screenshotImage = document.querySelector(".screenshot-image");
 const displayImage = document.querySelector(".display-image");
 const analyze = document.querySelector(".analyze");
 const result = document.querySelector(".result");
+const match = document.querySelector(".match");
+
+// Users skintone
+let skintone = {};
 
 // Stream switch
 let streamStarted = false;
@@ -106,36 +110,44 @@ analyze.onclick = () => {
     B += data[i + 2];
   }
 
-  // Get average R, G, B, A values
+  // Get average R, G, B values
   R = Math.round(R / pixelsPerChannel);
   G = Math.round(G / pixelsPerChannel);
   B = Math.round(B / pixelsPerChannel);
 
+  // Store R, G, B values inside skintone object
+  skintone = {
+    r: R,
+    g: G,
+    b: B,
+  };
+
   // Display average color in doc
-  let color = `rgb(${R} ${G} ${B})`;
-  console.log(color);
+  const color = `rgb(${R} ${G} ${B})`;
   result.style.backgroundColor = color;
+  console.log(color);
 };
-//document.querySelector("p").innerHTML = color;
-// TODO get RGB values from div (right now they are hard coded)
-const match = document.querySelector(".match");
+
+// Looks for skintone in db, adds skintone if not found
 match.onclick = async () => {
   let resRaw;
   let res;
-  resRaw = await fetch("/getShade/174/129/100");
+  let url = "/" + skintone.r + "/" + skintone.g + "/" + skintone.b;
+  resRaw = await fetch("/getshade" + url);
   res = await resRaw.json();
-
   // If shade not found create new shade
   if (res.shade.length === 0) {
     console.log("Skintone not found, updating database");
-    resRaw = await fetch("/createShade", {
+    resRaw = await fetch("/createShade" + url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
     });
     res = await resRaw.json();
-    console.log("Added shade to database ", res.result);
+    document.querySelector("p").innerHTML =
+      "Sorry! We are working on getting a match for your skintone as fast as we can!";
+    console.log("Added shade to database ", res.result.ops[0].id);
   } else {
     console.log("Shade", res.shade[0].id);
   }

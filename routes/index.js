@@ -20,8 +20,11 @@ router.get("/getShade/:rVal/:gVal/:bVal", async (req, res) => {
   }
 });
 
-router.post("/createShade", async (req, res) => {
-  const dbRes = await myDB.createShade();
+router.post("/createShade/:rVal/:gVal/:bVal", async (req, res) => {
+  let R = parseInt(req.params.rVal);
+  let G = parseInt(req.params.gVal);
+  let B = parseInt(req.params.bVal);
+  const dbRes = await myDB.createShade({ r: R, g: G, b: B });
   res.send({ result: dbRes });
 });
 

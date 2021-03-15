@@ -33,29 +33,35 @@ function myDB() {
     }
   };
 
-  mydb.createShade = async () => {
-    // let client;
-    // try {
-    //   // Connect to the db
-    //   client = new MongoClient(url);
-    //   console.log("Connecting to the db");
-    //   await client.connect();
-    //   console.log("Connected");
-    //   // Connect to the collection
-    //   const db = client.db(DB_NAME);
-    //   const skintoneCol = db.collection("shades");
-    //   // Create new entry in collection
-    //   console.log("Collection ready, inserting ", shade);
-    //   const res = await skintoneCol.insertOne(shade);
-    //   console.log("Inserted ", res);
-    //   return res;
-    // } catch (e) {
-    //   console.log(e);
-    // } finally {
-    //   console.log("closing the connection");
-    //   client.close();
-    // }
-    return "TRUE";
+  mydb.createShade = async (shade) => {
+    let client;
+    try {
+      // Connect to the db
+      client = new MongoClient(url, { useUnifiedTopology: true });
+      console.log("Connecting to db: ", DB_NAME);
+      await client.connect();
+      console.log("Connected");
+      // Connect to the collection
+      const db = client.db(DB_NAME);
+      const skintoneCol = db.collection("skintones");
+      // Create new entry in collection
+      console.log("Ready to insert ", shade);
+      const sort = { id: -1 };
+      const last = await skintoneCol.find().sort(sort).limit(1).toArray();
+      const newSkintone = {
+        id: last[0].id + 1,
+        r: shade.r,
+        g: shade.g,
+        b: shade.b,
+      };
+      const res = await skintoneCol.insertOne(newSkintone);
+      return res;
+    } catch (e) {
+      console.log(e);
+    } finally {
+      console.log("closing the connection");
+      client.close();
+    }
   };
   return mydb;
 }
