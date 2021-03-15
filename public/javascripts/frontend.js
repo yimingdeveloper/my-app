@@ -112,9 +112,10 @@ analyze.onclick = () => {
   G = Math.round(G / pixelsPerChannel);
   B = Math.round(B / pixelsPerChannel);
 
-  // Write average RGB values in doc
+  // Print average RGB values to console [FOR TESTING ONLY]
   let color = `rgb(${R} ${G} ${B})`;
-  document.querySelector("p").innerHTML = color;
+  //document.querySelector("p").innerHTML = color;
+  console.log(color);
 
   // Display average color in doc
   result.style.backgroundColor = color;
