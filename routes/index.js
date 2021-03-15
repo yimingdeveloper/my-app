@@ -12,8 +12,6 @@ router.get("/getShade/:rVal/:gVal/:bVal", async (req, res) => {
   let R = parseInt(req.params.rVal);
   let G = parseInt(req.params.gVal);
   let B = parseInt(req.params.bVal);
-  console.log(R);
-  console.log(typeof R);
   try {
     const shade = await myDB.getShade({ r: R, g: G, b: B });
     res.send({ shade: shade });
@@ -24,7 +22,7 @@ router.get("/getShade/:rVal/:gVal/:bVal", async (req, res) => {
 
 router.post("/createShade", async (req, res) => {
   const dbRes = await myDB.createShade();
-  res.send({ connected: dbRes });
+  res.send({ result: dbRes });
 });
 
 module.exports = router;

@@ -80,7 +80,6 @@ capture.onclick = () => {
 // TODO: Turn off camera here
 // Samples color of a region inside screenshot
 analyze.onclick = () => {
-  console.log("in sampleColor");
   const canvasOutput = document.createElement("canvas");
   const context = canvasOutput.getContext("2d");
   const width = screenshotImage.width;
@@ -112,25 +111,23 @@ analyze.onclick = () => {
   G = Math.round(G / pixelsPerChannel);
   B = Math.round(B / pixelsPerChannel);
 
-  // Print average RGB values to console [FOR TESTING ONLY]
-  let color = `rgb(${R} ${G} ${B})`;
-  //document.querySelector("p").innerHTML = color;
-  console.log(color);
-
   // Display average color in doc
+  let color = `rgb(${R} ${G} ${B})`;
+  console.log(color);
   result.style.backgroundColor = color;
 };
+//document.querySelector("p").innerHTML = color;
 // TODO get RGB values from div (right now they are hard coded)
 const match = document.querySelector(".match");
 match.onclick = async () => {
   let resRaw;
   let res;
-  resRaw = await fetch("/getShade/173/129/100");
+  resRaw = await fetch("/getShade/174/129/100");
   res = await resRaw.json();
 
   // If shade not found create new shade
-  if (res.shade === "SHADE NOT FOUND") {
-    console.log("Data not found, updating database");
+  if (res.shade.length === 0) {
+    console.log("Skintone not found, updating database");
     resRaw = await fetch("/createShade", {
       method: "POST",
       headers: {
@@ -138,6 +135,7 @@ match.onclick = async () => {
       },
     });
     res = await resRaw.json();
+    console.log("Added shade to database ", res.result);
   } else {
     console.log("Shade", res.shade[0].id);
   }

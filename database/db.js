@@ -55,7 +55,7 @@ function myDB() {
     //   console.log("closing the connection");
     //   client.close();
     // }
-    return "CREATED SHADE";
+    return "TRUE";
   };
   return mydb;
 }
