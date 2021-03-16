@@ -1,10 +1,15 @@
 const { MongoClient } = require("mongodb");
+const dotenv = require("dotenv");
+
+// Imports DB admin credentials
+dotenv.config();
 
 // Implements CRUD routines on database
 function myDB() {
   const mydb = {};
 
-  const url = process.env.MONGO_URL || "mongodb://localhost:27017";
+  //process.env.MONGO_URL || "mongodb://localhost:27017`;
+  const url = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ux7qi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
   const DB_NAME = "mydb";
 
   mydb.getShade = async (query) => {
@@ -13,7 +18,10 @@ function myDB() {
     let skintone = {};
     try {
       // Connect to the db
-      client = new MongoClient(url, { useUnifiedTopology: true });
+      client = new MongoClient(url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
       console.log("Connecting to db: ", DB_NAME);
       await client.connect();
       console.log("Connected!");
@@ -37,7 +45,10 @@ function myDB() {
     let client;
     try {
       // Connect to the db
-      client = new MongoClient(url, { useUnifiedTopology: true });
+      client = new MongoClient(url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
       console.log("Connecting to db: ", DB_NAME);
       await client.connect();
       console.log("Connected");
@@ -66,3 +77,16 @@ function myDB() {
   return mydb;
 }
 module.exports = myDB();
+
+// const MongoClient = require("mongodb").MongoClient;
+// const uri =
+//   "mongodb+srv://HastiGD:<password>@cluster0.ux7qi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+// client.connect((err) => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
