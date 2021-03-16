@@ -1,15 +1,15 @@
 const { MongoClient } = require("mongodb");
-const dotenv = require("dotenv");
 
-// Imports DB admin credentials
-dotenv.config();
+// Imports DB admin credentials and connects to MongoDB Atlas
+//const dotenv = require("dotenv");
+//dotenv.config();
+//const url = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ux7qi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 // Implements CRUD routines on database
 function myDB() {
   const mydb = {};
 
-  //process.env.MONGO_URL || "mongodb://localhost:27017`;
-  const url = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ux7qi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+  const url = process.env.MONGODB_URI;
   const DB_NAME = "mydb";
 
   mydb.getShade = async (query) => {
