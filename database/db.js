@@ -1,9 +1,9 @@
 const { MongoClient } = require("mongodb");
 
 // Imports DB admin credentials and connects to MongoDB Atlas
-//const dotenv = require("dotenv");
-//dotenv.config();
-//const url = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ux7qi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+// const dotenv = require("dotenv");
+// dotenv.config();
+// const url = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ux7qi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 // Implements CRUD routines on database
 function myDB() {
@@ -15,7 +15,6 @@ function myDB() {
   mydb.getShade = async (query) => {
     console.log("In mydb.getShade");
     let client;
-    let skintone = {};
     try {
       // Connect to the db
       client = new MongoClient(url, {
@@ -27,12 +26,12 @@ function myDB() {
       console.log("Connected!");
       // Connect to the collection
       const db = client.db(DB_NAME);
-      const skintoneCol = db.collection("skintones");
+      const skintonesCol = db.collection("skintones");
       console.log("Collection ready, querying with ", query);
       // Query the collection
-      skintone = await skintoneCol.find(query).toArray();
-      console.log("Got skintone", skintone);
-      return skintone;
+      const shade = await skintonesCol.find({ id: 1 }).toArray();
+      console.log("Got skintone", shade);
+      return shade;
     } catch (e) {
       console.log(e);
     } finally {
@@ -77,16 +76,3 @@ function myDB() {
   return mydb;
 }
 module.exports = myDB();
-
-// const MongoClient = require("mongodb").MongoClient;
-// const uri =
-//   "mongodb+srv://HastiGD:<password>@cluster0.ux7qi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-// client.connect((err) => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });

@@ -13,30 +13,65 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css"
+    />
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
     <title>Capture</title>
   </head>
   <body>
+    <!-- Header -->
+    <header class="container-fluid">
+      <div class="row">
+        <div class="col-3">
+          <a href="index.html"
+            ><i class="bi bi-arrow-left-square fa-2x"> </i
+          ></a>
+        </div>
+        <div class="col-6 text-center">
+          <h1 class="display-6">COLOR MATCHER</h1>
+        </div>
+        <div class="col-3"></div>
+      </div>
+    </header>
+    <!-- Tips -->
+    <section class="tips">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <div class="row tips">
+            <div class="col-lg-6">
+              <h1 class="display-4">Tips for taking pictures</h1>
+              <p class="lead">
+                To ensure the best match, follow these tips for taking the best
+                picture
+              </p>
+            </div>
+
+            <div class="col-lg-6"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Video Feed -->
+    <br />
+    <h6 class="display-6 text-center">Take a Selfie</h6>
     <div class="display-cover">
       <video autoplay></video>
       <!-- Outline -->
       <img class="outline d-none" src="images/outline.png" alt="" />
       <!-- Control Buttons -->
       <div class="controls">
-        <button type="button" class="btn btn-primary play" title="Play">
+        <button type="button" class="btn btn-dark play" title="Play">
           PLAY
         </button>
-        <button
-          type="button"
-          class="btn btn-primary pause d-none"
-          title="Pause"
-        >
+        <button type="button" class="btn btn-dark pause d-none" title="Pause">
           PAUSE
         </button>
         <button
           type="button"
-          class="btn btn-primary capture d-none"
+          class="btn btn-dark capture d-none"
           title="Capture"
         >
           CAPTURE
@@ -44,29 +79,57 @@
       </div>
     </div>
     <!-- Outputs -->
+    <div class="text-center">
+      <i class="bi bi-arrow-down-circle d-none fa-3x"></i>
+    </div>
     <div class="outputs container">
       <canvas class="d-none"></canvas>
       <div>
         <img class="screenshot-image d-none" />
         <img class="display-image d-none" />
       </div>
-      <button
-        type="button"
-        class="btn btn-primary analyze d-none"
-        title="Analyze"
-      >
-        ANALYZE
+      <button type="button" class="btn btn-dark analyze d-none" title="Analyze">
+        FIND SKINTONE
       </button>
       <br />
+      <!-- <div class="result"> -->
       <br />
-      <div class="result"></div>
+      <div class="row result">
+        <div class="col-6">
+          <div class="result-card d-none">
+            <div class="card-top skintone"></div>
+            <!-- <div class="skintone"></div> -->
+            <div class="card-body">
+              <p class="card-text">
+                Click below to find the match to your unique skintone!
+              </p>
+              <button type="button" class="btn btn-dark match" title="Match">
+                GET MATCH
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div>
+            <br />
+            <h6 class="name d-none">Name:</h6>
+            <p class="desc d-none">Description:</p>
+          </div>
+        </div>
+      </div>
       <br />
-      <button type="button" class="btn btn-primary match" title="Match">
-        FIND MY MATCH!
-      </button>
+      <!-- </div> -->
       <br />
       <p></p>
     </div>
+    <!-- Footer -->
+    <footer class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <h5 class="display-10 fw-light">Made by Hasti 🍉</h5>
+        </div>
+      </div>
+    </footer>
     <!-- JavaScript -->
     <script src="./javascripts/frontend.js"></script>
   </body>

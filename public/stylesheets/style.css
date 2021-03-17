@@ -1,12 +1,21 @@
-header {
+header .row {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   background-color: #f5f5f5;
 }
 
-.about .jumbotron {
+a {
+  color: black;
+}
+
+a:hover {
+  color: #f26589;
+}
+
+.about .jumbotron,
+.tips .jumbotron {
   background: linear-gradient(to bottom right, #fdc7d1 0%, #fcf5f5 100%);
-  padding: 5%;
+  padding: 3%;
 }
 
 .about img {
@@ -17,13 +26,40 @@ header {
   height: auto;
 }
 
+.process .jumbotron {
+  background: linear-gradient(to top left, #deb9ac 50%, #f8f0ed 100%);
+  padding: 3%;
+}
+
+.process .row.steps {
+  display: flex;
+  justify-content: space-between;
+}
+
+.process .steps .step {
+  text-align: center;
+}
+
+.process .step-label {
+  width: 75%;
+  max-width: 40px;
+}
+
+.process .step1,
+.step2,
+.step3 {
+  width: 80%;
+  max-width: 300px;
+  height: auto;
+}
+
 .display-cover {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 70%;
   max-width: 1280px;
-  margin: 5% auto;
+  margin: 2% auto;
   position: relative;
 }
 
@@ -60,18 +96,31 @@ button {
   position: absolute;
 }
 
+.outputs {
+  text-align: center;
+}
+
 .display-image {
   text-align: center;
-  width: 640px;
-  height: 360px;
+  width: 480px;
+  height: 270px;
   border-radius: 4px;
-  border: 2px solid whitesmoke;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  border: 2px solid grey;
+  box-shadow: 0 0 15px 5px grey;
 }
 
 .result {
-  width: 60px;
-  height: 60px;
+  justify-content: center;
+  text-align: left;
+}
+
+.result-card {
+  width: 18rem;
+}
+
+.result-card .card-top {
+  height: 150px;
+  border: 5px solid black;
 }
 
 footer {
@@ -80,84 +129,3 @@ footer {
   justify-content: center;
   align-items: center;
 }
-
-/*Turn this on if you switch from buttons to icons*/
-/*.controls > button:hover {
-  color: white !important;
-}*/
-
-/*background-color: ; #b5829a #dac20b*/
-
-/*@font-face {
-  font-family: "cabinregular";
-  src: url("fonts/webfont-cabin.woff2") format("woff2"),
-    url("fonts/webfont-cabin.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "liu_jian_mao_caoregular";
-  src: url("fonts/webfont-liujianmaocao.woff2") format("woff2"),
-    url("fonts/webfont-liujianmaocao.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-*/
-
-/*
-@media (min-width: 300px) and (max-width: 400px) {
-  .controls {
-    flex-direction: column;
-  }
-
-  .controls button {
-    margin: 5px 0 !important;
-  }
-}
-
-.controls > button > svg {
-  height: 20px;
-  width: 18px;
-  text-align: center;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.controls button:nth-child(1) {
-  border: 2px solid #d2002e;
-}
-
-.controls button:nth-child(1) svg {
-  color: #d2002e;
-}
-
-.controls button:nth-child(2) {
-  border: 2px solid #008496;
-}
-
-.controls button:nth-child(2) svg {
-  color: #008496;
-}
-
-.controls button:nth-child(3) {
-  border: 2px solid #00b541;
-}
-
-.controls button:nth-child(3) svg {
-  color: #00b541;
-}
-
-.controls > button {
-  width: 45px;
-  height: 45px;
-  text-align: center;
-  border-radius: 100%;
-  margin: 0 6px;
-  background: transparent;
-}
-
-.controls > button:hover svg {
-  color: white;
-}
-
-*/

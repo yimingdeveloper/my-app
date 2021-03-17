@@ -9,8 +9,11 @@ const canvas = document.querySelector("canvas");
 const screenshotImage = document.querySelector(".screenshot-image");
 const displayImage = document.querySelector(".display-image");
 const analyze = document.querySelector(".analyze");
-const result = document.querySelector(".result");
+const displaySkintone = document.querySelector(".skintone");
 const match = document.querySelector(".match");
+const resultCard = document.querySelector(".result-card");
+const name = document.querySelector(".name");
+const desc = document.querySelector(".desc");
 
 // Users skintone
 let skintone = {};
@@ -79,11 +82,14 @@ capture.onclick = () => {
   //screenshotImage.classList.remove("d-none");
   displayImage.classList.remove("d-none");
   analyze.classList.remove("d-none");
+  document.querySelector(".bi-arrow-down-circle").classList.remove("d-none");
 };
 
 // TODO: Turn off camera here
 // Samples color of a region inside screenshot
 analyze.onclick = () => {
+  // Turn off the camera
+
   const canvasOutput = document.createElement("canvas");
   const context = canvasOutput.getContext("2d");
   const width = screenshotImage.width;
@@ -124,8 +130,9 @@ analyze.onclick = () => {
 
   // Display average color in doc
   const color = `rgb(${R} ${G} ${B})`;
-  result.style.backgroundColor = color;
+  displaySkintone.style.backgroundColor = color;
   console.log(color);
+  resultCard.classList.remove("d-none");
 };
 
 // Looks for skintone in db, adds skintone if not found
@@ -135,6 +142,7 @@ match.onclick = async () => {
   let url = "/" + skintone.r + "/" + skintone.g + "/" + skintone.b;
   resRaw = await fetch("/getshade" + url);
   res = await resRaw.json();
+
   // If shade not found create new shade
   if (res.shade.length === 0) {
     console.log("Skintone not found, updating database");
@@ -149,6 +157,12 @@ match.onclick = async () => {
       "Sorry! We are working on getting a match for your skintone as fast as we can!";
     console.log("Added shade to database ", res.result.ops[0].id);
   } else {
-    console.log("Shade", res.shade[0].id);
+    name.innerHTML += " " + res.shade[0].name;
+    desc.innerHTML += " " + res.shade[0].desc;
+    name.classList.remove("d-none");
+    desc.classList.remove("d-none");
+    console.log("Shade", res);
+    console.log("Name: ", res.shade[0].name);
+    console.log("Desc: ", res.shade[0].desc);
   }
 };
