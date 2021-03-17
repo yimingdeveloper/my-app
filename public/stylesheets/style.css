@@ -53,6 +53,11 @@ a:hover {
   height: auto;
 }
 
+.row.tips {
+  display: flex;
+  justify-content: center;
+}
+
 .display-cover {
   display: flex;
   justify-content: center;
