@@ -30,7 +30,7 @@ Root Directory
 * package-lock.json
 * package.json
 
-To install and run the application locally you will need to download all of the above, including the contents inside subdirectories. You will also need to download and install [MongoDB](https://docs.mongodb.com/manual/installation/). I've created this [MongoDB tutorial](https://docs.google.com/document/d/1nzWnD9vSUSv72Kb-Tg_khQ90ptvDhWftoqAM-JAUudI/edit) for setting up a local MongoDB server. Finally, to run this app on your own machine you will need to install [Node.js](https://nodejs.org/en/download/). I've created this [Node.js tutorial](https://docs.google.com/document/d/1_fU-Ka_3ZnCgHPkUwItE9cH5LHI6aUIGCqO10D50_bU/edit) to help you run the app locally.
+To install and run the application locally you will need to download all of the above, including the contents inside subdirectories. You will also need to download and install [MongoDB](https://docs.mongodb.com/manual/installation/). I've created this [MongoDB tutorial](https://docs.google.com/document/d/1nzWnD9vSUSv72Kb-Tg_khQ90ptvDhWftoqAM-JAUudI/edit) for setting up a local MongoDB server. Finally, to run this app on your own machine you will need to install [Node.js](https://nodejs.org/en/download/). I've created this [Node.js tutorial](https://docs.google.com/document/d/1_fU-Ka_3ZnCgHPkUwItE9cH5LHI6aUIGCqO10D50_bU/edit) to help you run the app locally. See the complete installation guide [here](https://docs.google.com/document/d/1aIhort6mJ20-jU5sEgG1euooZqTby5fBEPlXhg4nUPQ/edit?usp=sharing)
 
 See the presentation slides, as well as a list of the resources used, [here](https://docs.google.com/presentation/d/1Tv9ERqGb_XRhBtMxDNRAwd-MD48rsYcuJMZjpkGov_4/edit#slide=id.p).
 
